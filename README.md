@@ -4,7 +4,7 @@ A simple internal cheat/mod for MegaBonk.
 
 Features:
 
-F1 - Increase Proecticle Count by 1
+F1 - Increase Projectile Count by 1
 
 F2 - Increase Attack Speed by 100%
 
