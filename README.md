@@ -18,6 +18,8 @@ F6 - Pickup All XP on Map
 
 F7 - Adds Jumps (I think there's fall damage?)
 
+F10 - Switch to maximum luck
+
 ![Alt text](https://github.com/JumpmanSr/MegaJump/blob/master/MegaBonk.png?raw=true)
 ![Alt text](https://github.com/JumpmanSr/MegaJump/blob/master/megajump3.png?raw=true)
 

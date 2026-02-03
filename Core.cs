@@ -22,6 +22,7 @@ namespace MegaJump
         float _ESP_BoxHeight = 100f;
         bool _DrawInteractables = true;
         bool _SetFontSizeOnce = true;
+        bool _SetMaxLuck = false;
         GUIStyle bigger = null;
 
         Il2CppAssets.Scripts.Managers.EnemyManager enemyManager = null;
@@ -102,26 +103,32 @@ namespace MegaJump
             }
             // Simple toggle for ESP
             GUI.color = Color.red;
-            GUI.Label(new Rect(10, Screen.height - 180, 300, 30), "MegaJump by JumpmanSr", bigger);
+            GUI.Label(new Rect(10, Screen.height - 200, 300, 30), "MegaJump by JumpmanSr", bigger);
             if (_ESP)
             {
                 GUI.color = Color.green;
-                GUI.Label(new Rect(10, Screen.height - 150, 300, 30), "ESP: ON (F3 to toggle) | Interactables: " + _DrawInteractables.ToString());
+                GUI.Label(new Rect(10, Screen.height - 170, 300, 30), "ESP: ON (F3 to toggle) | Interactables: " + _DrawInteractables.ToString());
             }
             else
             {
-                GUI.Label(new Rect(10, Screen.height - 150, 300, 30), "ESP: OFF (F3 to toggle) | Interactables: " + _DrawInteractables.ToString());
+                GUI.Label(new Rect(10, Screen.height - 170, 300, 30), "ESP: OFF (F3 to toggle) | Interactables: " + _DrawInteractables.ToString());
             }
-            GUI.Label(new Rect(10, Screen.height - 130, 300, 30), "F1 to Add an Extra Projectile");
-            GUI.Label(new Rect(10, Screen.height - 110, 300, 30), "F2 To Increase Attack Speed + 100%");
-            GUI.Label(new Rect(10, Screen.height - 90, 300, 30), "F4 to Toggle Enable/Disable Interactable ESP");
-            GUI.Label(new Rect(10, Screen.height - 70, 300, 30), "F5 to Heal Player");
-            GUI.Label(new Rect(10, Screen.height - 50, 300, 30), "F6 to Grab All XP");
-            GUI.Label(new Rect(10, Screen.height - 30, 300, 30), "F7 to Add Extra Jumps");
+            GUI.Label(new Rect(10, Screen.height - 150, 300, 30), "F1 to Add an Extra Projectile");
+            GUI.Label(new Rect(10, Screen.height - 130, 300, 30), "F2 To Increase Attack Speed + 100%");
+            GUI.Label(new Rect(10, Screen.height - 110, 300, 30), "F4 to Toggle Enable/Disable Interactable ESP");
+            GUI.Label(new Rect(10, Screen.height - 90, 300, 30), "F5 to Heal Player");
+            GUI.Label(new Rect(10, Screen.height - 70, 300, 30), "F6 to Grab All XP");
+            GUI.Label(new Rect(10, Screen.height - 50, 300, 30), "F7 to Add Extra Jumps");
+            GUI.Label(new Rect(10, Screen.height - 30, 300, 30), $"Max Luck: {(_SetMaxLuck ? "ON" : "OFF")} (F10 to toggle)");
         }
 
         public override void OnUpdate()
         {
+            if (_SetMaxLuck) 
+            {
+                var player = Il2Cpp.GameManager.Instance.GetPlayerInventory();
+                player.playerStats.stats[Il2CppAssets.Scripts.Menu.Shop.EStat.Luck] = 55;
+            }
 
             if (UnityEngine.Input.GetKeyDown(KeyCode.F1))
             {
@@ -140,7 +147,6 @@ namespace MegaJump
                 if (player != null)
                 {
                     player.playerStats.stats[Il2CppAssets.Scripts.Menu.Shop.EStat.AttackSpeed] += 1f;
-                    
                 }
                 else
                     MelonLogger.Warning("Player is NULL");
@@ -173,6 +179,16 @@ namespace MegaJump
                 if (player != null)
                 {
                     player.playerStats.stats[Il2CppAssets.Scripts.Menu.Shop.EStat.ExtraJumps] += 1f;
+                }
+                else
+                    MelonLogger.Warning("Player is NULL");
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F10))
+            {
+                var player = Il2Cpp.GameManager.Instance.GetPlayerInventory();
+                if (player != null)
+                {
+                    _SetMaxLuck = !_SetMaxLuck;
                 }
                 else
                     MelonLogger.Warning("Player is NULL");
